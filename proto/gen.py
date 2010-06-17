@@ -8,7 +8,7 @@ import getopt
 import sys
 import re
 
-opts, args = getopt.getopt(sys.argv[1:], 'p:')
+args = sys.argv[1:]
 
 from mako.template import Template
 
@@ -20,9 +20,12 @@ def c_open(self):
 
 def c_close(self):
     template = Template(filename='proto/template.c.py')
-    print(template.render(data=data))
+    f = open('proto/%s.c' % module.namespace.header, 'w')
+    f.write(template.render(**data))
+    
     template = Template(filename='proto/template.h.py')
-    print(template.render(data=data))
+    f = open('proto/%s.h' % module.namespace.header, 'w')
+    f.write(template.render(**data))
 
 def c_simple(self, name):
     data['simple'].append((self, name))

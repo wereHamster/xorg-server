@@ -1,53 +1,95 @@
-/* template: v0.1, bindings: v${data['version']} */
+/* template: v0.1, bindings: v${version} */
 
-#include <proto/${data['module'].namespace.header}.h>
+#include <proto/${module.namespace.header}.h>
 
-% for req in data['request']:
-<% name = ('_').join(req.name) %>
-
-struct __req_${name} {
-% for field in req.fields:
-    ${('_').join(field.type.name)} ${field.field_name};
-% endfor
-};
+% for req in request:
+<% name = ('_').join(req.name[1:]) %>
+/************************************************************
+ * Request ${(':').join(req.name[1:])}, opcode: ${req.opcode}
+ */
 
 static void
-__swap_req_${name}(struct __req_${name} *req)
+swap_req_${name}(struct req_${name} *req, unsigned long length)
 {
 % for field in [field for field in req.fields if field.wire]:
 % if field.type.is_simple and field.type.size > 1:
-    __swap${field.type.size * 8}(req->${field.field_name});
+    swap${field.type.size * 8}(&req->${field.field_name});
 % endif
 % endfor
 }
+
+% if req.reply:
+static void
+swap_rep_${name}(struct rep_${name} *rep)
+{
+% for field in [field for field in req.reply.fields if field.wire]:
+% if field.type.is_simple and field.type.size > 1:
+    swap${field.type.size * 8}(&rep->${field.field_name});
+% endif
+% endfor
+}
+% endif
 
 static int
-__wire_${name}(ClientPtr client)
+wire_${name}(ClientPtr client)
 {
-    struct __req_${name} *req = client->requestBuffer;
+% if req.fixed_size():
+    if (sizeof(struct req_${name}) >> 2 != client->req_len)
+        return BadLength;
+% else:
+    if (sizeof(struct req_${name}) >> 2 > client->req_len)
+        return BadLength;
+% endif
+
+    struct req_${name} *req = client->requestBuffer;
     if (client->swapped)
-        __swap_req_${name}(req);
+        swap_req_${name}(req, client->req_len);
 
 % if not req.reply:
-    return __impl_${name}(client, req);
+    return impl_${name}(client, req);
 % else:
-    struct __rep_${name} rep;
-    int err = __impl_${name}(client, req, &rep);
-% endif
-    if (err)
+    struct rep_${name} rep;
+    int err = impl_${name}(client, req, &rep);
+    if (err < 0)
         return err;
+
+    if (client->swapped)
+        swap_rep_${name}(&rep);
+
+    return WriteToClient(client, sizeof(rep), &rep);
+% endif
 }
 
 % endfor
 
-static struct xcb_ext_t ext {
-% for req in data['request']:
-    &__wire_${('_').join(req.name)},
+
+
+/************************************************************
+ * Request dispatch code
+ */
+
+static struct xcb_handler_t handler[] = {
+% for req in request:
+    [${req.opcode}] = &wire_${('_').join(req.name[1:])},
 % endfor
 };
 
-void
-${('_').join(data['module'].namespace.prefix)}(void)
+static int
+dispatch(ClientPtr client)
 {
-    xcb_ext_register("${data['module'].namespace.ext_xname}", &ext);
+    unsigned short minor = StandardMinorOpcode(client);
+    if (client->swapped)
+        swap16(&minor);
+
+    if (!handler[minor])
+        return BadRequest;
+
+    return (*handler[minor])(client);
+}
+
+void
+init_${('_').join(module.namespace.prefix)}(void)
+{
+    AddExtension("${module.namespace.ext_xname}", 0, 0,
+        &dispatch, &dispatch, NULL, &StandardMinorOpcode);
 }
