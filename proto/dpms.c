@@ -2,6 +2,9 @@
 
 #include <proto/dpms.h>
 
+#include <include/os.h>
+#include <include/extnsionst.h>
+#include <include/dixstruct.h>
 
 /************************************************************
  * Request DPMS:GetVersion, opcode: 0
@@ -277,7 +280,8 @@ wire_DPMS_Info(ClientPtr client)
  * Request dispatch code
  */
 
-static struct xcb_handler_t handler[] = {
+typedef int (*xcb_handler_t)(ClientPtr client);
+static xcb_handler_t handler[] = {
     [0] = &wire_DPMS_GetVersion,
     [1] = &wire_DPMS_Capable,
     [2] = &wire_DPMS_GetTimeouts,
@@ -285,7 +289,7 @@ static struct xcb_handler_t handler[] = {
     [4] = &wire_DPMS_Enable,
     [5] = &wire_DPMS_Disable,
     [6] = &wire_DPMS_ForceLevel,
-    [7] = &wire_DPMS_Info,
+    [7] = &wire_DPMS_Info
 };
 
 static int

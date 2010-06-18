@@ -2,6 +2,9 @@
 
 #include <proto/${module.namespace.header}.h>
 
+#include <include/os.h>
+#include <include/extensionst.h>
+
 % for req in request:
 <% name = ('_').join(req.name[1:]) %>
 /************************************************************
@@ -68,6 +71,7 @@ wire_${name}(ClientPtr client)
  * Request dispatch code
  */
 
+typedef int (*xcb_handler_t)(ClientPtr client);
 static struct xcb_handler_t handler[] = {
 % for req in request:
     [${req.opcode}] = &wire_${('_').join(req.name[1:])},

@@ -1,5 +1,8 @@
 /* template: v0.1, bindings: v${version} */
 
+#include <stdint.h>
+#include <include/dix.h>
+
 % for value in module.imports:
 #include <proto/${value[1]}.h>
 % endfor
@@ -31,8 +34,8 @@ struct rep_${name} {
 % endfor
 };
 
-int impl_${name}(ClientPtr client, __req_${name} *req, __rep_${name} *rep);
+int impl_${name}(ClientPtr client, struct req_${name} *req, struct rep_${name} *rep);
 % else:
-int impl_${name}(ClientPtr client, __req_${name} *req);
+int impl_${name}(ClientPtr client, struct req_${name} *req);
 % endif
 % endfor

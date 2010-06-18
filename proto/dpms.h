@@ -1,13 +1,8 @@
 /* template: v0.1, bindings: v0.1 */
 
+#include <stdint.h>
+#include <include/dix.h>
 
-
-enum xcb_DPMS_DPMSMode {
-    xcb_DPMS_DPMSMode_On = ,
-    xcb_DPMS_DPMSMode_Standby = ,
-    xcb_DPMS_DPMSMode_Suspend = ,
-    xcb_DPMS_DPMSMode_Off = ,
-}
 
 
 struct req_DPMS_GetVersion {
@@ -27,7 +22,7 @@ struct rep_DPMS_GetVersion {
     uint16_t server_minor_version;
 };
 
-int impl_DPMS_GetVersion(ClientPtr client, __req_DPMS_GetVersion *req, __rep_DPMS_GetVersion *rep);
+int impl_DPMS_GetVersion(ClientPtr client, struct req_DPMS_GetVersion *req, struct rep_DPMS_GetVersion *rep);
 
 struct req_DPMS_Capable {
     uint8_t major_opcode;
@@ -44,7 +39,7 @@ struct rep_DPMS_Capable {
     uint8_t pad1;
 };
 
-int impl_DPMS_Capable(ClientPtr client, __req_DPMS_Capable *req, __rep_DPMS_Capable *rep);
+int impl_DPMS_Capable(ClientPtr client, struct req_DPMS_Capable *req, struct rep_DPMS_Capable *rep);
 
 struct req_DPMS_GetTimeouts {
     uint8_t major_opcode;
@@ -63,7 +58,7 @@ struct rep_DPMS_GetTimeouts {
     uint8_t pad1;
 };
 
-int impl_DPMS_GetTimeouts(ClientPtr client, __req_DPMS_GetTimeouts *req, __rep_DPMS_GetTimeouts *rep);
+int impl_DPMS_GetTimeouts(ClientPtr client, struct req_DPMS_GetTimeouts *req, struct rep_DPMS_GetTimeouts *rep);
 
 struct req_DPMS_SetTimeouts {
     uint8_t major_opcode;
@@ -74,7 +69,7 @@ struct req_DPMS_SetTimeouts {
     uint16_t off_timeout;
 };
 
-int impl_DPMS_SetTimeouts(ClientPtr client, __req_DPMS_SetTimeouts *req);
+int impl_DPMS_SetTimeouts(ClientPtr client, struct req_DPMS_SetTimeouts *req);
 
 struct req_DPMS_Enable {
     uint8_t major_opcode;
@@ -82,7 +77,7 @@ struct req_DPMS_Enable {
     uint16_t length;
 };
 
-int impl_DPMS_Enable(ClientPtr client, __req_DPMS_Enable *req);
+int impl_DPMS_Enable(ClientPtr client, struct req_DPMS_Enable *req);
 
 struct req_DPMS_Disable {
     uint8_t major_opcode;
@@ -90,7 +85,7 @@ struct req_DPMS_Disable {
     uint16_t length;
 };
 
-int impl_DPMS_Disable(ClientPtr client, __req_DPMS_Disable *req);
+int impl_DPMS_Disable(ClientPtr client, struct req_DPMS_Disable *req);
 
 struct req_DPMS_ForceLevel {
     uint8_t major_opcode;
@@ -99,7 +94,7 @@ struct req_DPMS_ForceLevel {
     uint16_t power_level;
 };
 
-int impl_DPMS_ForceLevel(ClientPtr client, __req_DPMS_ForceLevel *req);
+int impl_DPMS_ForceLevel(ClientPtr client, struct req_DPMS_ForceLevel *req);
 
 struct req_DPMS_Info {
     uint8_t major_opcode;
@@ -117,4 +112,4 @@ struct rep_DPMS_Info {
     uint8_t pad1;
 };
 
-int impl_DPMS_Info(ClientPtr client, __req_DPMS_Info *req, __rep_DPMS_Info *rep);
+int impl_DPMS_Info(ClientPtr client, struct req_DPMS_Info *req, struct rep_DPMS_Info *rep);
