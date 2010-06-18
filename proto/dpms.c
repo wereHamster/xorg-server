@@ -307,8 +307,9 @@ dispatch(ClientPtr client)
 }
 
 void
-init_xcb_DPMS(void)
+DPMSExtensionInit(void)
 {
+    ErrorF("Init dpms\n");
     AddExtension("DPMS", 0, 0,
         &dispatch, &dispatch, NULL, &StandardMinorOpcode);
 }

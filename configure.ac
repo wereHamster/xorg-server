@@ -510,15 +510,6 @@ AC_ARG_WITH(builderstring,   AS_HELP_STRING([--with-builderstring=BUILDERSTRING]
 				[ BUILDERSTRING="$withval" ]
 				[ ])
 
-dnl XCB protocol decoder
-AC_ARG_ENABLE(xcb, AS_HELP_STRING([--enable-xcb],[Use XCB protocol bindings]),
-              [XCB=$enableval],[XCB=no])
-AM_CONDITIONAL(XCB, [test "x$XCB" = xyes])
-PROTO_LIB='$(top_builddir)/proto/libproto.la'
-if test "x$XCB" = xyes; then
-   AC_DEFINE(XCB, 1, [Use XCB protocol bindings])
-fi
-
 dnl Determine font path
 XORG_FONTROOTDIR
 XORG_FONTSUBDIR(FONTMISCDIR, fontmiscdir, misc)
@@ -1348,6 +1339,9 @@ AC_SUBST([OS_LIB])
 
 MAIN_LIB='$(top_builddir)/dix/libmain.la'
 AC_SUBST([MAIN_LIB])
+
+PROTO_LIB='$(top_builddir)/proto/libproto.la'
+AC_SUBST([PROTO_LIB])
 
 MI_LIB='$(top_builddir)/mi/libmi.la'
 MI_EXT_LIB='$(top_builddir)/mi/libmiext.la'
