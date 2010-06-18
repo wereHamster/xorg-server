@@ -5,10 +5,6 @@
 #include <proto/${module.namespace.header}.h>
 #include <proto/${module.namespace.header}-impl.h>
 
-#include <include/os.h>
-#include <include/extnsionst.h>
-#include <include/dixstruct.h>
-
 % for req in request:
 <% name = ('_').join(req.name[1:]) %>
 /************************************************************
@@ -103,6 +99,7 @@ dispatch(ClientPtr client)
 void
 ${module.namespace.prefix[1]}ExtensionInit(void)
 {
+    ErrorF("Initializing ${module.namespace.prefix[1]}\n");
     AddExtension("${module.namespace.ext_xname}", 0, 0,
         &dispatch, &dispatch, NULL, &StandardMinorOpcode);
 }

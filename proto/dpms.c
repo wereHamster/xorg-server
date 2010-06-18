@@ -5,10 +5,6 @@
 #include <proto/dpms.h>
 #include <proto/dpms-impl.h>
 
-#include <include/os.h>
-#include <include/extnsionst.h>
-#include <include/dixstruct.h>
-
 
 /************************************************************
  * Request DPMS:GetVersion, opcode: 0
@@ -329,6 +325,7 @@ dispatch(ClientPtr client)
 void
 DPMSExtensionInit(void)
 {
+    ErrorF("Initializing DPMS\n");
     AddExtension("DPMS", 0, 0,
         &dispatch, &dispatch, NULL, &StandardMinorOpcode);
 }

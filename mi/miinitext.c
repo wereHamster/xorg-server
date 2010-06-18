@@ -385,6 +385,7 @@ void EnableDisableExtensionError(char *name, Bool enable)
 void
 InitExtensions(int argc, char *argv[])
 {
+	ErrorF("Initializing Extensions\n");
     if (!noGEExtension) GEExtensionInit();
 
 #ifdef PANORAMIX
@@ -511,6 +512,9 @@ static ExtensionModule staticExtensions[] = {
 #endif
 #ifdef DAMAGE
     { DamageExtensionInit, "DAMAGE", &noDamageExtension, NULL },
+#endif
+#ifdef DPMSExtension
+    { DPMSExtensionInit, "DPMS", &noDPMSExtension, NULL },
 #endif
     { NULL, NULL, NULL, NULL, NULL }
 };

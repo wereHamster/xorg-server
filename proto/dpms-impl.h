@@ -60,7 +60,7 @@ impl_DPMS_Enable(ClientPtr client, struct req_DPMS_Enable *req)
 static int
 impl_DPMS_Disable(ClientPtr client, struct req_DPMS_Disable *req)
 {
-    DPMSSet(client, DPMSModeOn);
+    DPMSSet(client, DPMS_DPMSMode_On);
     DPMSEnabled = FALSE;
 
     return 0;
@@ -73,10 +73,10 @@ impl_DPMS_ForceLevel(ClientPtr client, struct req_DPMS_ForceLevel *req)
         return BadMatch;
 
     /* TODO: generate this validation from the xcb protocol description */
-    if (req->power_level != DPMSModeOn &&
-        req->power_level != DPMSModeStandby &&
-        req->power_level != DPMSModeSuspend &&
-	req->power_level != DPMSModeOff) {
+    if (req->power_level != DPMS_DPMSMode_On &&
+        req->power_level != DPMS_DPMSMode_Standby &&
+        req->power_level != DPMS_DPMSMode_Suspend &&
+	req->power_level != DPMS_DPMSMode_Off) {
         client->errorValue = req->power_level;
 	return BadValue;
     }

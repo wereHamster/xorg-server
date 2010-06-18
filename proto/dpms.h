@@ -13,6 +13,15 @@
 
 
 
+enum xcb_DPMS_DPMSMode {
+    DPMS_DPMSMode_On,
+    DPMS_DPMSMode_Standby,
+    DPMS_DPMSMode_Suspend,
+    DPMS_DPMSMode_Off,
+    __DPMS_DPMSMode_Last
+};
+
+
 struct req_DPMS_GetVersion {
     uint8_t major_opcode;
     uint8_t minor_opcode;

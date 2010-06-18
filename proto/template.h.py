@@ -22,9 +22,14 @@ typedef ${('_').join(type.name).lower()} ${('_').join(name).lower()}_t;
 % for (type, name) in enum:
 enum ${('_').join(name)} {
 % for val in type.values:
-    ${('_').join(name)}_${val[0]} = ${val[1]},
+% if val[1]:
+    ${('_').join(name[1:])}_${val[0]} = ${val[1]},
+% else:
+    ${('_').join(name[1:])}_${val[0]},
+% endif
 % endfor
-}
+    __${('_').join(name[1:])}_Last
+};
 % endfor
 
 % for req in request:
