@@ -1,5 +1,6 @@
 /* template: v0.1, bindings: v0.1 */
 
+#include <proto/common.h>
 #include <proto/dpms.h>
 
 #include <include/os.h>

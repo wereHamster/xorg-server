@@ -39,7 +39,8 @@ SUBDIRS = \
 	exa \
 	config \
 	hw \
-	test
+	test \
+	proto
 
 if XORG
 aclocaldir = $(datadir)/aclocal
