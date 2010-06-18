@@ -34,11 +34,6 @@ extern void XFree86DGARegister(INITARGS);
 #include <X11/extensions/xf86dgaproto.h>
 #endif
 
-#ifdef DPMSExtension
-extern void DPMSExtensionInit(INITARGS);
-#include <X11/extensions/dpmsconst.h>
-#endif
-
 #ifdef XV
 extern void XvExtensionInit(INITARGS);
 extern void XvMCExtensionInit(INITARGS);

@@ -74,15 +74,6 @@ static ExtensionModule extensionModules[] = {
 	NULL
     },
 #endif
-#ifdef DPMSExtension
-    {
-	DPMSExtensionInit,
-	DPMSExtensionName,
-	&noDPMSExtension,
-	NULL,
-	NULL
-    },
-#endif
 #ifdef XV
     {
 	XvExtensionInit,
