@@ -3,6 +3,9 @@
 #include <stdint.h>
 #include <include/dix.h>
 
+#define ${('_').join(module.namespace.prefix)}_Major ${module.namespace.major_version}
+#define ${('_').join(module.namespace.prefix)}_Minor ${module.namespace.minor_version}
+
 % for value in module.imports:
 #include <proto/${value[1]}.h>
 % endfor

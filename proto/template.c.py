@@ -1,9 +1,11 @@
 /* template: v0.1, bindings: v${version} */
 
+#include <proto/common.h>
 #include <proto/${module.namespace.header}.h>
 
 #include <include/os.h>
-#include <include/extensionst.h>
+#include <include/extnsionst.h>
+#include <include/dixstruct.h>
 
 % for req in request:
 <% name = ('_').join(req.name[1:]) %>
@@ -72,7 +74,7 @@ wire_${name}(ClientPtr client)
  */
 
 typedef int (*xcb_handler_t)(ClientPtr client);
-static struct xcb_handler_t handler[] = {
+static xcb_handler_t handler[] = {
 % for req in request:
     [${req.opcode}] = &wire_${('_').join(req.name[1:])},
 % endfor

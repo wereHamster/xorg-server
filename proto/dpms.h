@@ -3,7 +3,8 @@
 #include <stdint.h>
 #include <include/dix.h>
 
-
+#define xcb_DPMS_Major 0
+#define xcb_DPMS_Minor 0
 
 struct req_DPMS_GetVersion {
     uint8_t major_opcode;

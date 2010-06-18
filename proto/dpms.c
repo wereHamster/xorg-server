@@ -7,6 +7,7 @@
 #include <include/extnsionst.h>
 #include <include/dixstruct.h>
 
+
 /************************************************************
  * Request DPMS:GetVersion, opcode: 0
  */
@@ -309,7 +310,7 @@ dispatch(ClientPtr client)
 void
 DPMSExtensionInit(void)
 {
-    ErrorF("Init dpms\n");
+    ErrorF("Init DPMS\n");
     AddExtension("DPMS", 0, 0,
         &dispatch, &dispatch, NULL, &StandardMinorOpcode);
 }
