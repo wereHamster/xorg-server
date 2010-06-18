@@ -43,7 +43,6 @@ impl_DPMS_SetTimeouts(ClientPtr client, struct req_DPMS_SetTimeouts *req)
     return 0;
 }
 
-
 static int
 impl_DPMS_Enable(ClientPtr client, struct req_DPMS_Enable *req)
 {

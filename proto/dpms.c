@@ -1,7 +1,7 @@
 /* template: v0.1, bindings: v0.1 */
 
 #include <proto/common.h>
-
+#include <X11/extensions/bigreqsproto.h>
 #include <proto/dpms.h>
 #include <proto/dpms-impl.h>
 
@@ -184,6 +184,7 @@ swap_req_DPMS_Enable(struct req_DPMS_Enable *req, unsigned long length)
 static int
 wire_DPMS_Enable(ClientPtr client)
 {
+    ErrorF("%d != %d\n", sizeof(struct req_DPMS_Enable) >> 2, client->req_len);
     if (sizeof(struct req_DPMS_Enable) >> 2 != client->req_len)
         return BadLength;
 
@@ -313,11 +314,12 @@ static int
 dispatch(ClientPtr client)
 {
     unsigned short minor = StandardMinorOpcode(client);
-    if (client->swapped)
-        swap16(&minor);
-
+    ErrorF("DPMS minor %d, bigreq: %d\n", minor, !!client->big_requests);
     if (!handler[minor])
         return BadRequest;
+
+    xBigReq *req = client->requestBuffer;
+    ErrorF("Zero: %d, Length: %d (%d)\n", req->zero, req->length, htons(req->length));
 
     return (*handler[minor])(client);
 }

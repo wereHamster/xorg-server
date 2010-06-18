@@ -87,9 +87,6 @@ static int
 dispatch(ClientPtr client)
 {
     unsigned short minor = StandardMinorOpcode(client);
-    if (client->swapped)
-        swap16(&minor);
-
     if (!handler[minor])
         return BadRequest;
 
