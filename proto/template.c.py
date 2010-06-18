@@ -1,7 +1,9 @@
 /* template: v0.1, bindings: v${version} */
 
 #include <proto/common.h>
+
 #include <proto/${module.namespace.header}.h>
+#include <proto/${module.namespace.header}-impl.h>
 
 #include <include/os.h>
 #include <include/extnsionst.h>
@@ -53,7 +55,11 @@ wire_${name}(ClientPtr client)
 % if not req.reply:
     return impl_${name}(client, req);
 % else:
-    struct rep_${name} rep;
+    struct rep_${name} rep = { .response_type = 1,
+        .length = sizeof(struct rep_${name}),
+        .sequence = client->sequence
+    };
+
     int err = impl_${name}(client, req, &rep);
     if (err < 0)
         return err;
@@ -78,6 +84,7 @@ static xcb_handler_t handler[] = {
 % for req in request:
     [${req.opcode}] = &wire_${('_').join(req.name[1:])},
 % endfor
+    [${len(request)}] = NULL
 };
 
 static int
@@ -94,7 +101,7 @@ dispatch(ClientPtr client)
 }
 
 void
-init_${('_').join(module.namespace.prefix)}(void)
+${module.namespace.prefix[1]}ExtensionInit(void)
 {
     AddExtension("${module.namespace.ext_xname}", 0, 0,
         &dispatch, &dispatch, NULL, &StandardMinorOpcode);

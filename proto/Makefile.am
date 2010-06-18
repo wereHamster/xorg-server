@@ -7,7 +7,7 @@ AM_CFLAGS = $(DIX_CFLAGS)
 SRCS =
 
 if DPMSExtension
-SRCS += dpms.h dpms.c dpms-impl.c
+SRCS += dpms.c dpms.h dpms-impl.h
 endif
 
 libproto_la_SOURCES = $(SRCS)

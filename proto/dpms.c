@@ -1,7 +1,9 @@
 /* template: v0.1, bindings: v0.1 */
 
 #include <proto/common.h>
+
 #include <proto/dpms.h>
+#include <proto/dpms-impl.h>
 
 #include <include/os.h>
 #include <include/extnsionst.h>
@@ -39,7 +41,11 @@ wire_DPMS_GetVersion(ClientPtr client)
     if (client->swapped)
         swap_req_DPMS_GetVersion(req, client->req_len);
 
-    struct rep_DPMS_GetVersion rep;
+    struct rep_DPMS_GetVersion rep = { .response_type = 1,
+        .length = sizeof(struct rep_DPMS_GetVersion),
+        .sequence = client->sequence
+    };
+
     int err = impl_DPMS_GetVersion(client, req, &rep);
     if (err < 0)
         return err;
@@ -78,7 +84,11 @@ wire_DPMS_Capable(ClientPtr client)
     if (client->swapped)
         swap_req_DPMS_Capable(req, client->req_len);
 
-    struct rep_DPMS_Capable rep;
+    struct rep_DPMS_Capable rep = { .response_type = 1,
+        .length = sizeof(struct rep_DPMS_Capable),
+        .sequence = client->sequence
+    };
+
     int err = impl_DPMS_Capable(client, req, &rep);
     if (err < 0)
         return err;
@@ -120,7 +130,11 @@ wire_DPMS_GetTimeouts(ClientPtr client)
     if (client->swapped)
         swap_req_DPMS_GetTimeouts(req, client->req_len);
 
-    struct rep_DPMS_GetTimeouts rep;
+    struct rep_DPMS_GetTimeouts rep = { .response_type = 1,
+        .length = sizeof(struct rep_DPMS_GetTimeouts),
+        .sequence = client->sequence
+    };
+
     int err = impl_DPMS_GetTimeouts(client, req, &rep);
     if (err < 0)
         return err;
@@ -264,7 +278,11 @@ wire_DPMS_Info(ClientPtr client)
     if (client->swapped)
         swap_req_DPMS_Info(req, client->req_len);
 
-    struct rep_DPMS_Info rep;
+    struct rep_DPMS_Info rep = { .response_type = 1,
+        .length = sizeof(struct rep_DPMS_Info),
+        .sequence = client->sequence
+    };
+
     int err = impl_DPMS_Info(client, req, &rep);
     if (err < 0)
         return err;
@@ -291,7 +309,8 @@ static xcb_handler_t handler[] = {
     [4] = &wire_DPMS_Enable,
     [5] = &wire_DPMS_Disable,
     [6] = &wire_DPMS_ForceLevel,
-    [7] = &wire_DPMS_Info
+    [7] = &wire_DPMS_Info,
+    [8] = NULL
 };
 
 static int
@@ -310,7 +329,6 @@ dispatch(ClientPtr client)
 void
 DPMSExtensionInit(void)
 {
-    ErrorF("Init DPMS\n");
     AddExtension("DPMS", 0, 0,
         &dispatch, &dispatch, NULL, &StandardMinorOpcode);
 }

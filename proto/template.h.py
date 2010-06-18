@@ -1,5 +1,10 @@
 /* template: v0.1, bindings: v${version} */
 
+<% define = '__PROTO_%s__' % ('_').join(module.namespace.prefix[1:]).upper() %>
+
+#ifndef ${define}
+#define ${define}
+
 #include <stdint.h>
 #include <include/dix.h>
 
@@ -37,8 +42,12 @@ struct rep_${name} {
 % endfor
 };
 
-int impl_${name}(ClientPtr client, struct req_${name} *req, struct rep_${name} *rep);
+static int
+impl_${name}(ClientPtr client, struct req_${name} *req, struct rep_${name} *rep);
 % else:
-int impl_${name}(ClientPtr client, struct req_${name} *req);
+static int
+impl_${name}(ClientPtr client, struct req_${name} *req);
 % endif
 % endfor
+
+#endif /* ${define} */

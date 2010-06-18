@@ -71,7 +71,6 @@ SOFTWARE.
 #ifdef HAVE_XNEST_CONFIG_H
 #include <xnest-config.h>
 #undef COMPOSITE
-#undef DPMSExtension
 #endif
 
 #ifdef HAVE_KDRIVE_CONFIG_H
@@ -429,7 +428,7 @@ InitExtensions(int argc, char *argv[])
 #ifdef XSELINUX
     if (!noSELinuxExtension) SELinuxExtensionInit();
 #endif
-#if defined(DPMSExtension) && !defined(NO_HW_ONLY_EXTS)
+#if defined(DPMSExtension)
     if (!noDPMSExtension) DPMSExtensionInit();
 #endif
 #ifdef XF86BIGFONT
