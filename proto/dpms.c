@@ -1,6 +1,7 @@
 /* template: v0.1, bindings: v0.1 */
 
 #include <proto/common.h>
+
 #include <X11/extensions/bigreqsproto.h>
 #include <proto/dpms.h>
 #include <proto/dpms-impl.h>
@@ -314,12 +315,8 @@ static int
 dispatch(ClientPtr client)
 {
     unsigned short minor = StandardMinorOpcode(client);
-    ErrorF("DPMS minor %d, bigreq: %d\n", minor, !!client->big_requests);
     if (!handler[minor])
         return BadRequest;
-
-    xBigReq *req = client->requestBuffer;
-    ErrorF("Zero: %d, Length: %d (%d)\n", req->zero, req->length, htons(req->length));
 
     return (*handler[minor])(client);
 }

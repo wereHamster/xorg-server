@@ -1,4 +1,8 @@
 
+#ifdef HAVE_DIX_CONFIG_H
+#include <dix-config.h>
+#endif
+
 #include <arpa/inet.h>
 
 #define swap16(ptr) *ptr = htons(*ptr)
