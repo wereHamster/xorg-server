@@ -37,10 +37,10 @@ static int
 wire_${name}(ClientPtr client)
 {
 % if req.fixed_size():
-    if (sizeof(struct req_${name}) >> 2 != client->req_len)
+    if ((sizeof(struct req_${name}) + 3) >> 2 != client->req_len)
         return BadLength;
 % else:
-    if (sizeof(struct req_${name}) >> 2 > client->req_len)
+    if ((sizeof(struct req_${name}) + 3) >> 2 > client->req_len)
         return BadLength;
 % endif
 
@@ -52,7 +52,7 @@ wire_${name}(ClientPtr client)
     return impl_${name}(client, req);
 % else:
     struct rep_${name} rep = { .response_type = 1,
-        .length = sizeof(struct rep_${name}),
+        .length = (sizeof(struct rep_${name}) + 3) >> 2,
         .sequence = client->sequence
     };
 

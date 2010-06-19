@@ -36,7 +36,7 @@ Equipment Corporation.
 
 Bool DPMSSupported(void)
 {
-    return FALSE;
+    return TRUE;
 }
 
 int DPMSSet(ClientPtr client, int level)

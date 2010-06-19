@@ -30,7 +30,7 @@ swap_rep_DPMS_GetVersion(struct rep_DPMS_GetVersion *rep)
 static int
 wire_DPMS_GetVersion(ClientPtr client)
 {
-    if (sizeof(struct req_DPMS_GetVersion) >> 2 != client->req_len)
+    if ((sizeof(struct req_DPMS_GetVersion) + 3) >> 2 != client->req_len)
         return BadLength;
 
     struct req_DPMS_GetVersion *req = client->requestBuffer;
@@ -38,7 +38,7 @@ wire_DPMS_GetVersion(ClientPtr client)
         swap_req_DPMS_GetVersion(req, client->req_len);
 
     struct rep_DPMS_GetVersion rep = { .response_type = 1,
-        .length = sizeof(struct rep_DPMS_GetVersion),
+        .length = (sizeof(struct rep_DPMS_GetVersion) + 3) >> 2,
         .sequence = client->sequence
     };
 
@@ -73,7 +73,7 @@ swap_rep_DPMS_Capable(struct rep_DPMS_Capable *rep)
 static int
 wire_DPMS_Capable(ClientPtr client)
 {
-    if (sizeof(struct req_DPMS_Capable) >> 2 != client->req_len)
+    if ((sizeof(struct req_DPMS_Capable) + 3) >> 2 != client->req_len)
         return BadLength;
 
     struct req_DPMS_Capable *req = client->requestBuffer;
@@ -81,7 +81,7 @@ wire_DPMS_Capable(ClientPtr client)
         swap_req_DPMS_Capable(req, client->req_len);
 
     struct rep_DPMS_Capable rep = { .response_type = 1,
-        .length = sizeof(struct rep_DPMS_Capable),
+        .length = (sizeof(struct rep_DPMS_Capable) + 3) >> 2,
         .sequence = client->sequence
     };
 
@@ -119,7 +119,7 @@ swap_rep_DPMS_GetTimeouts(struct rep_DPMS_GetTimeouts *rep)
 static int
 wire_DPMS_GetTimeouts(ClientPtr client)
 {
-    if (sizeof(struct req_DPMS_GetTimeouts) >> 2 != client->req_len)
+    if ((sizeof(struct req_DPMS_GetTimeouts) + 3) >> 2 != client->req_len)
         return BadLength;
 
     struct req_DPMS_GetTimeouts *req = client->requestBuffer;
@@ -127,7 +127,7 @@ wire_DPMS_GetTimeouts(ClientPtr client)
         swap_req_DPMS_GetTimeouts(req, client->req_len);
 
     struct rep_DPMS_GetTimeouts rep = { .response_type = 1,
-        .length = sizeof(struct rep_DPMS_GetTimeouts),
+        .length = (sizeof(struct rep_DPMS_GetTimeouts) + 3) >> 2,
         .sequence = client->sequence
     };
 
@@ -159,7 +159,7 @@ swap_req_DPMS_SetTimeouts(struct req_DPMS_SetTimeouts *req, unsigned long length
 static int
 wire_DPMS_SetTimeouts(ClientPtr client)
 {
-    if (sizeof(struct req_DPMS_SetTimeouts) >> 2 != client->req_len)
+    if ((sizeof(struct req_DPMS_SetTimeouts) + 3) >> 2 != client->req_len)
         return BadLength;
 
     struct req_DPMS_SetTimeouts *req = client->requestBuffer;
@@ -184,7 +184,7 @@ swap_req_DPMS_Enable(struct req_DPMS_Enable *req, unsigned long length)
 static int
 wire_DPMS_Enable(ClientPtr client)
 {
-    if (sizeof(struct req_DPMS_Enable) >> 2 != client->req_len)
+    if ((sizeof(struct req_DPMS_Enable) + 3) >> 2 != client->req_len)
         return BadLength;
 
     struct req_DPMS_Enable *req = client->requestBuffer;
@@ -209,7 +209,7 @@ swap_req_DPMS_Disable(struct req_DPMS_Disable *req, unsigned long length)
 static int
 wire_DPMS_Disable(ClientPtr client)
 {
-    if (sizeof(struct req_DPMS_Disable) >> 2 != client->req_len)
+    if ((sizeof(struct req_DPMS_Disable) + 3) >> 2 != client->req_len)
         return BadLength;
 
     struct req_DPMS_Disable *req = client->requestBuffer;
@@ -235,7 +235,7 @@ swap_req_DPMS_ForceLevel(struct req_DPMS_ForceLevel *req, unsigned long length)
 static int
 wire_DPMS_ForceLevel(ClientPtr client)
 {
-    if (sizeof(struct req_DPMS_ForceLevel) >> 2 != client->req_len)
+    if ((sizeof(struct req_DPMS_ForceLevel) + 3) >> 2 != client->req_len)
         return BadLength;
 
     struct req_DPMS_ForceLevel *req = client->requestBuffer;
@@ -267,7 +267,7 @@ swap_rep_DPMS_Info(struct rep_DPMS_Info *rep)
 static int
 wire_DPMS_Info(ClientPtr client)
 {
-    if (sizeof(struct req_DPMS_Info) >> 2 != client->req_len)
+    if ((sizeof(struct req_DPMS_Info) + 3) >> 2 != client->req_len)
         return BadLength;
 
     struct req_DPMS_Info *req = client->requestBuffer;
@@ -275,7 +275,7 @@ wire_DPMS_Info(ClientPtr client)
         swap_req_DPMS_Info(req, client->req_len);
 
     struct rep_DPMS_Info rep = { .response_type = 1,
-        .length = sizeof(struct rep_DPMS_Info),
+        .length = (sizeof(struct rep_DPMS_Info) + 3) >> 2,
         .sequence = client->sequence
     };
 
