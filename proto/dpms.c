@@ -2,7 +2,6 @@
 
 #include <proto/common.h>
 
-#include <X11/extensions/bigreqsproto.h>
 #include <proto/dpms.h>
 #include <proto/dpms-impl.h>
 
@@ -44,7 +43,7 @@ wire_DPMS_GetVersion(ClientPtr client)
     };
 
     int err = impl_DPMS_GetVersion(client, req, &rep);
-    if (err < 0)
+    if (err)
         return err;
 
     if (client->swapped)
@@ -87,7 +86,7 @@ wire_DPMS_Capable(ClientPtr client)
     };
 
     int err = impl_DPMS_Capable(client, req, &rep);
-    if (err < 0)
+    if (err)
         return err;
 
     if (client->swapped)
@@ -133,7 +132,7 @@ wire_DPMS_GetTimeouts(ClientPtr client)
     };
 
     int err = impl_DPMS_GetTimeouts(client, req, &rep);
-    if (err < 0)
+    if (err)
         return err;
 
     if (client->swapped)
@@ -185,7 +184,6 @@ swap_req_DPMS_Enable(struct req_DPMS_Enable *req, unsigned long length)
 static int
 wire_DPMS_Enable(ClientPtr client)
 {
-    ErrorF("%d != %d\n", sizeof(struct req_DPMS_Enable) >> 2, client->req_len);
     if (sizeof(struct req_DPMS_Enable) >> 2 != client->req_len)
         return BadLength;
 
@@ -282,7 +280,7 @@ wire_DPMS_Info(ClientPtr client)
     };
 
     int err = impl_DPMS_Info(client, req, &rep);
-    if (err < 0)
+    if (err)
         return err;
 
     if (client->swapped)

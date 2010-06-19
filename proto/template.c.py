@@ -57,7 +57,7 @@ wire_${name}(ClientPtr client)
     };
 
     int err = impl_${name}(client, req, &rep);
-    if (err < 0)
+    if (err)
         return err;
 
     if (client->swapped)
